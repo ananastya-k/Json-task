@@ -11,8 +11,8 @@ public class Utils {
 
     }
     public static String cleanValue(String string){
-        string = string.trim().replaceAll("^\"|\"$", "");
         string = string.trim().replaceAll("^\\[|\\]$", "");
+        string = string.trim().replaceAll("^\"|\"$", "");
         return string;
     }
     public static boolean isPrimitiveOrWrapper(Class<?> clazz) {

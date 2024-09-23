@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Serializer {
 
@@ -17,7 +18,7 @@ public class Serializer {
     }
 
     public JsonContext generateContext(Object obj) {
-        JsonContext rootContext = new JsonContext(obj);
+        JsonContext rootContext = new JsonContext();
         buildContext(rootContext, obj);
 
         return rootContext;
@@ -69,10 +70,13 @@ public class Serializer {
         } else if (value instanceof Map<?,?>) {
             childContext.setTokens(ContextTokenType.OBJECT);
             generateMapContext(childContext, (Map<?,?>) value);
+        } else if (value instanceof UUID) {
+            childContext.setTokens(ContextTokenType.STRING);
+            childContext.setValue(value.toString());
         } else if (value instanceof Temporal) {
             childContext.setTokens(ContextTokenType.STRING);
             childContext.setValue(value.toString());
-        } else {
+        }else {
             childContext.setTokens(ContextTokenType.OBJECT);
             buildContext(childContext, value);
         }
@@ -97,6 +101,4 @@ public class Serializer {
             processingField(parentContext, entry.getKey().toString(), entry.getValue());
         }
     }
-
-
 }

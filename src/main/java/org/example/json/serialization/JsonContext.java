@@ -3,6 +3,7 @@ package org.example.json.serialization;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.json.utils.ContextTokenType;
+import org.example.json.utils.Tokens;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class JsonContext {
     private String value;
     private List<JsonContext> child;
 
-    public JsonContext(Object obj) {
+    public JsonContext() {
         this.tokens = ContextTokenType.OBJECT;
         this.child = new ArrayList<>();
     }
@@ -48,6 +49,7 @@ public class JsonContext {
             jsonBuilder.append(ContextTokenType.NAME.getStartToken());
             jsonBuilder.append(name);
             jsonBuilder.append(ContextTokenType.NAME.getEndToken());
+            jsonBuilder.append(Tokens.COLON);
         }
     }
 

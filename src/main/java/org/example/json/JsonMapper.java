@@ -6,19 +6,13 @@ import org.example.json.serialization.Serializer;
 public class JsonMapper {
     private final Serializer cgen = new Serializer();
 
-    public String writeAsJsonString(Object object) throws IllegalAccessException {
-        if(object == null) {
-            return "null";
-        }
-        return  cgen.serialize(object);
+    private final Deserializer deserializer = new Deserializer();
+    public String writeAsJsonString(Object object) {
+        return object == null ? "null" : cgen.serialize(object);
     }
 
-    public <T> T writeJsonAsObject(String json, Class<T> clazz) throws IllegalAccessException {
-        if (json == null || clazz == null) {
-            return null;
-        }
-        Deserializer deserializer = new Deserializer();
-        return deserializer.fromJson(json,clazz);
+    public <T> T writeJsonAsObject(String json, Class<T> clazz) {
+        return (json == null || clazz == null) ? null : deserializer.fromJson(json,clazz);
     }
 
 
